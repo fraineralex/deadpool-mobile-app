@@ -4,7 +4,15 @@
     "web": {
       "bundler": "metro"
     },
-    "name": "deadpool-app",
-    "slug": "deadpool-app"
+    "name": "Deadpool App",
+    "slug": "deadpool-app",
+    "extra": {
+      "eas": {
+        "projectId": "a877bb68-f9df-438f-bfe7-859d7460e87f"
+      }
+    },
+    "android": {
+      "package": "fraineralex.deadpoolapp"
+    }
   }
 }

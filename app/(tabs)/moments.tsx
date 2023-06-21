@@ -6,22 +6,25 @@ import { darkMode } from '../utils/theme/themeColors';
 const moments = [
   {
     id: '1',
-    title: 'Moment 1',
-    video: require('../assets/videos/cover.mp4'),
+    title: '1. Deadpool Maximum Effort',
+    video: require('../assets/videos/moment2.mp4'),
+    description: 'In this intense scene, Deadpool demonstrates his maximum effort by taking down a group of bad guys in a spectacular fashion.',
   },
   {
     id: '2',
-    title: 'Moment 2',
-    video: require('../assets/videos/cover.mp4'),
+    title: '2. Deadpool vs Francis',
+    video: require('../assets/videos/moment1.mp4'),
+    description: 'Witness the epic showdown between Deadpool and Francis as they engage in a fierce battle filled with action and humor.',
   },
   {
     id: '3',
-    title: 'Moment 3',
-    video: require('../assets/videos/cover.mp4'),
+    title: '3. Domino vs Cable',
+    video: require('../assets/videos/moment3.mp4'),
+    description: 'Watch as Domino and Cable face off in a thrilling confrontation, showcasing their unique abilities and determination.',
   },
 ];
 
-const Moment = ({ title, video, onPress }) => {
+const Moment = ({ title, video, description, onPress }) => {
   const [isVideoPreviewReady, setIsVideoPreviewReady] = useState(false);
 
   const handleVideoPreviewReady = () => {
@@ -84,6 +87,7 @@ const MomentsScreen = () => {
                 isLooping
                 shouldPlay
               />
+              <Text style={styles.modalMomentDescription}>{selectedMoment.description}</Text>
               <Button title="Close" onPress={handleCloseModal} />
             </>
           )}
@@ -136,12 +140,18 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: darkMode.secondary,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   modalMomentVideo: {
     width: '100%',
     height: 300,
+    marginBottom: 10,
+  },
+  modalMomentDescription: {
+    fontSize: 16,
+    color: darkMode.secondary,
     marginBottom: 20,
+    textAlign: 'center',
   },
 });
 

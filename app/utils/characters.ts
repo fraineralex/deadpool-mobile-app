@@ -1,7 +1,7 @@
 export const characters = [
   {
     name: 'Deadpool',
-    photo: { uri: 'https://th.bing.com/th/id/R.6fc919e434731e38db740adb2f66cb12?rik=cHyjkzGePDtqoA&pid=ImgRaw&r=0' },
+    photo: { uri: 'https://www.dondeir.com/wp-content/uploads/2018/04/deadpool-2-estreno-en-mexico.jpg' },
     detail: 'Wade Wilson, also known as Deadpool, is a mercenary with accelerated regenerative abilities and a unique sense of humor.',
   },
   {

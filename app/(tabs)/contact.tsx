@@ -5,7 +5,7 @@ import { darkMode } from '../utils/theme/themeColors';
 const ContactMeScreen = () => {
   const fullName = 'Frainer Alexander Encarnación';
   const email = 'fraineralex2001@gmail.com';
-  const linkedIn = 'https://www.linkedin.com/in/fraineralex';
+  const linkedIn = 'in/fraineralex';
   const photo = { uri:'https://unavatar.io/fraineralex'};
 
   return (

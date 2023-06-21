@@ -2,14 +2,15 @@ import React, { useRef, useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { useFocusEffect } from '@react-navigation/native';
 import { darkMode } from '../utils/theme/themeColors';
 
 const { width } = Dimensions.get('window');
 
 const videos = [
-  { id: '1', title: 'Deadpool', description: "This is one of the funniest movies I've ever seen in my life!", video: require('../assets/videos/cover.mp4') },
-  { id: '2', title: 'Deadpool', description: "This is one of the funniest movies I've ever seen in my life!", video: require('../assets/videos/cover.mp4') },
-  { id: '3', title: 'Deadpool', description: "This is one of the funniest movies I've ever seen in my life!", video: require('../assets/videos/cover.mp4') },
+  { id: '1', title: 'Deadpool', description: "This is the first trailer of Deadpool 2", video: require('../assets/videos/cover1.mp4') },
+  { id: '2', title: 'Deadpool', description: "This is the first trailer of Deadpool 1", video: require('../assets/videos/cover2.mp4') },
+  { id: '3', title: 'Deadpool', description: "This is the second trailer of Deadpool 2", video: require('../assets/videos/cover3.mp4') },
 ];
 
 const Cover = () => {
@@ -18,17 +19,28 @@ const Cover = () => {
   const [videoStatus, setVideoStatus] = useState({});
 
   useEffect(() => {
-    // Pausar el video anterior al cambiar de slide
-    const previousVideoIndex = (activeSlide === 0 ? videos.length - 1 : activeSlide - 1);
+    // Pause the video of the previous slide when the active slide changes
+    const previousVideoIndex = activeSlide === 0 ? videos.length - 1 : activeSlide - 1;
     if (videoStatus[previousVideoIndex]) {
       videoStatus[previousVideoIndex].setStatusAsync({ shouldPlay: false });
     }
-
-    // Reproducir el video actual al cambiar de slide
-    if (videoStatus[activeSlide]) {
-      videoStatus[activeSlide].setStatusAsync({ shouldPlay: true });
-    }
   }, [activeSlide]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Play the video of the current slide when the screen is focused
+      if (videoStatus[activeSlide]) {
+        videoStatus[activeSlide].setStatusAsync({ shouldPlay: true });
+      }
+
+      // Cleanup function to pause the video when the screen is unfocused or when the active slide changes
+      return () => {
+        if (videoStatus[activeSlide]) {
+          videoStatus[activeSlide].setStatusAsync({ shouldPlay: false });
+        }
+      };
+    }, [activeSlide])
+  );
 
   const renderItem = ({ item, index }) => {
     return (
