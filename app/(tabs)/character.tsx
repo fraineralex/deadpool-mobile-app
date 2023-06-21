@@ -1,36 +1,24 @@
-import React from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, Image, TouchableOpacity, Modal, Button } from 'react-native';
 import { darkMode } from '../utils/theme/themeColors';
+import { characters } from '../utils/characters';
 
-const characters = [
-  {
-    name: 'Deadpool',
-    photo: { uri: 'https://th.bing.com/th/id/R.6fc919e434731e38db740adb2f66cb12?rik=cHyjkzGePDtqoA&pid=ImgRaw&r=0' },
-    detail: 'Wade Wilson, also known as Deadpool, is a mercenary with accelerated regenerative abilities and a unique sense of humor.',
-  },
-  {
-    name: 'Cable',
-    photo: { uri: 'https://th.bing.com/th/id/R.bc1f20f3d24cabde5a76cdde35359f65?rik=4WA2sQWuwS61vw&pid=ImgRaw&r=0' },
-    detail: 'Cable, whose real name is Nathan Summers, is a mutant from the future with telepathic and telekinetic abilities, as well as expertise in hand-to-hand combat.',
-  },
-  {
-    name: 'Domino',
-    photo: { uri: 'https://th.bing.com/th/id/R.899c40b8dfb280c9fdae79ebc5e5973e?rik=a9vIOdXGv4k%2baA&pid=ImgRaw&r=0' },
-    detail: 'Domino, whose real name is Neena Thurman, is a mutant with the ability to alter probabilities in her favor, granting her supernatural combat and luck skills.',
-  },
-];
-
-const Character = ({ name, photo, detail }) => (
-  <TouchableOpacity style={styles.characterContainer}>
+const Character = ({ name, photo, detail, onPress }) => (
+  <TouchableOpacity style={styles.characterContainer} onPress={onPress}>
     <Image source={photo} style={styles.characterPhoto} />
     <Text style={styles.characterName}>{name}</Text>
   </TouchableOpacity>
 );
 
 const CharactersScreen = () => {
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
+
   const handleCharacterPress = (character) => {
-    // Implement the logic to display the selected character's detail
-    console.log(character);
+    setSelectedCharacter(character);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedCharacter(null);
   };
 
   return (
@@ -46,6 +34,19 @@ const CharactersScreen = () => {
           />
         ))}
       </View>
+
+      <Modal visible={selectedCharacter !== null} animationType="slide">
+        <View style={styles.modalContainer}>
+          {selectedCharacter && (
+            <>
+              <Image source={selectedCharacter.photo} style={styles.modalCharacterPhoto} />
+              <Text style={styles.modalCharacterName}>{selectedCharacter.name}</Text>
+              <Text style={styles.modalCharacterDetail}>{selectedCharacter.detail}</Text>
+              <Button title="Close" onPress={handleCloseModal} />
+            </>
+          )}
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -57,20 +58,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: darkMode.secondary,
-    marginBottom: 20,
-  },
   charactersContainer: {
-    flexDirection: 'column',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
-    gap: 40,
     marginTop: 20,
   },
   characterContainer: {
+    width: '48%',
     alignItems: 'center',
+    marginBottom: 20,
   },
   characterPhoto: {
     width: 150,
@@ -82,6 +79,30 @@ const styles = StyleSheet.create({
     color: darkMode.secondary,
     marginTop: 10,
     fontWeight: 'bold',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: darkMode.primary,
+    paddingHorizontal: 20,
+  },
+  modalCharacterPhoto: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+  },
+  modalCharacterName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: darkMode.secondary,
+    marginTop: 20,
+  },
+  modalCharacterDetail: {
+    fontSize: 16,
+    color: darkMode.secondary,
+    marginTop: 10,
+    textAlign: 'center',
   },
 });
 
