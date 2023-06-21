@@ -128,6 +128,28 @@ export default () => {
           headerTintColor: darkMode.headerText,
         }}
       />
+      <Tabs.Screen
+        name="contact"
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <View style={{ marginBottom: focused ? -5 : 0 }}>
+              <MaterialIcons name="contact-page" size={size} color={color} />
+            </View>
+          ),
+          tabBarStyle: {borderTopWidth: 0},
+          tabBarLabel: () => null,
+          tabBarActiveBackgroundColor: darkMode.primary,
+          tabBarInactiveBackgroundColor: darkMode.primary,
+          headerTitle: 'HIRE ME',
+          headerTitleStyle: {fontSize: 20, fontWeight: 'bold', },
+          headerShadowVisible: false,
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: darkMode.headerBackground,
+          },
+          headerTintColor: darkMode.headerText,
+        }}
+      />
     </Tabs>
   );
 };
